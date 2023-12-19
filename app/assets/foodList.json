@@ -1,0 +1,173 @@
+[
+  {
+    "id": 1,
+    "name": "Salmon",
+    "containing": ["Protein", "Omega-3 fatty acids"],
+    "facts": { "protein": 25, "fat": 10, "carb": 0 },
+    "calories": 220,
+    "recipes": true,
+    "ingredients": null
+  },
+  {
+    "id": 2,
+    "name": "Quinoa",
+    "containing": ["Protein", "Fiber", "Iron"],
+    "facts": { "protein": 8, "fat": 4, "carb": 30 },
+    "calories": 120,
+    "recipes": true,
+    "ingredients": null
+  },
+  {
+    "id": 3,
+    "name": "Kale",
+    "containing": ["Vitamin K", "Vitamin C", "Fiber"],
+    "facts": { "protein": 3, "fat": 0, "carb": 6 },
+    "calories": 50,
+    "recipes": true,
+    "ingredients": null
+  },
+  {
+    "id": 4,
+    "name": "Chicken Breast",
+    "containing": ["Protein", "B vitamins", "Iron"],
+    "facts": { "protein": 30, "fat": 3, "carb": 0 },
+    "calories": 150,
+    "recipes": true,
+    "ingredients": null
+  }
+  //   {
+  //     "id": 5,
+  //     "name": "Sweet Potato",
+  //     "containing": ["Vitamin A", "Fiber", "Potassium"],
+  //     "facts": { "protein": 2, "fat": 0, "carb": 26 },
+  //     "calories": 110,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 6,
+  //     "name": "Greek Yogurt",
+  //     "containing": ["Protein", "Calcium", "Probiotics"],
+  //     "facts": { "protein": 15, "fat": 2, "carb": 10 },
+  //     "calories": 150,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 7,
+  //     "name": "Avocado",
+  //     "containing": ["Healthy fats", "Fiber", "Vitamin K"],
+  //     "facts": { "protein": 2, "fat": 15, "carb": 12 },
+  //     "calories": 160,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 8,
+  //     "name": "Oatmeal",
+  //     "containing": ["Fiber", "Beta-glucans", "Manganese"],
+  //     "facts": { "protein": 5, "fat": 2, "carb": 30 },
+  //     "calories": 150,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 9,
+  //     "name": "Eggs",
+  //     "containing": ["Protein", "B vitamins", "Choline"],
+  //     "facts": { "protein": 6, "fat": 5, "carb": 1 },
+  //     "calories": 70,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 10,
+  //     "name": "Broccoli",
+  //     "containing": ["Vitamin C", "Fiber", "Folate"],
+  //     "facts": { "protein": 3, "fat": 0, "carb": 6 },
+  //     "calories": 55,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 11,
+  //     "name": "Brown Rice",
+  //     "containing": ["Fiber", "Manganese", "Selenium"],
+  //     "facts": { "protein": 5, "fat": 1, "carb": 45 },
+  //     "calories": 215,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 12,
+  //     "name": "Spinach",
+  //     "containing": ["Vitamin K", "Iron", "Calcium"],
+  //     "facts": { "protein": 3, "fat": 0, "carb": 4 },
+  //     "calories": 20,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 13,
+  //     "name": "Almonds",
+  //     "containing": ["Healthy fats", "Protein", "Vitamin E"],
+  //     "facts": { "protein": 6, "fat": 14, "carb": 6 },
+  //     "calories": 160,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 14,
+  //     "name": "Cauliflower",
+  //     "containing": ["Vitamin C", "Fiber", "Antioxidants"],
+  //     "facts": { "protein": 2, "fat": 0, "carb": 5 },
+  //     "calories": 25,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 15,
+  //     "name": "Black Beans",
+  //     "containing": ["Protein", "Fiber", "Iron"],
+  //     "facts": { "protein": 7, "fat": 0, "carb": 20 },
+  //     "calories": 120,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 16,
+  //     "name": "Turkey",
+  //     "containing": ["Protein", "B vitamins", "Selenium"],
+  //     "facts": { "protein": 25, "fat": 3, "carb": 0 },
+  //     "calories": 150,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 17,
+  //     "name": "Blueberries",
+  //     "containing": ["Antioxidants", "Vitamin C", "Fiber"],
+  //     "facts": { "protein": 1, "fat": 0, "carb": 15 },
+  //     "calories": 80,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 18,
+  //     "name": "Chickpeas",
+  //     "containing": ["Protein", "Fiber", "Folate"],
+  //     "facts": { "protein": 6, "fat": 2, "carb": 22 },
+  //     "calories": 140,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   },
+  //   {
+  //     "id": 19,
+  //     "name": "Tomatoes",
+  //     "containing": ["Vitamin C", "Lycopene", "Potassium"],
+  //     "facts": { "protein": 1, "fat": 0, "carb": 5 },
+  //     "calories": 25,
+  //     "recipes": true,
+  //     "ingredients": null
+  //   }
+]

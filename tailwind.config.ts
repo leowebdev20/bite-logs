@@ -19,7 +19,8 @@ const config: Config = {
         card: "blue",
         "default-text": "white",
         "default-background": "gray",
-        "btn-blue": "blue"
+        "btn-blue": "rgb(29 78 216 / 1)",
+        "btn-passive": "#1f304d"
       }
     },
   },

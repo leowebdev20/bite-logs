@@ -49,6 +49,9 @@ $text-color: rgba($base-color, 0.18);
   .btn {
     @apply hover:no-underline bg-blue-400 hover:bg-btn-blue tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block;
   }
+  .btn-2 {
+    @apply hover:no-underline bg-btn-passive hover:bg-blue-900 tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block border border-white;
+  }
 }
 
 body {

@@ -1,0 +1,48 @@
+[
+  { "id": 0, "pain": 1, "description": "No pain at all, even feeling great!" },
+  {
+    "id": 1,
+    "pain": 2,
+    "description": "Very slight discomfort, easily tolerable."
+  },
+  {
+    "id": 2,
+    "pain": 3,
+    "description": "Mild discomfort, noticeable but not bothersome."
+  },
+  {
+    "id": 3,
+    "pain": 4,
+    "description": "Moderate discomfort, can be ignored with effort."
+  },
+  {
+    "id": 4,
+    "pain": 5,
+    "description": "Moderately strong discomfort, can't be ignored for long."
+  },
+  {
+    "id": 5,
+    "pain": 6,
+    "description": "Strong discomfort, interferes with daily activities."
+  },
+  {
+    "id": 6,
+    "pain": 7,
+    "description": "Very strong discomfort, limits daily activities."
+  },
+  {
+    "id": 7,
+    "pain": 8,
+    "description": "Intense discomfort, difficult to perform any activities."
+  },
+  {
+    "id": 8,
+    "pain": 9,
+    "description": "Severe discomfort, unbearable and incapacitating."
+  },
+  {
+    "id": 9,
+    "pain": 10,
+    "description": "Extreme discomfort, unable to perform any activity today."
+  }
+]

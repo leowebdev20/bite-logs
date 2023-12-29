@@ -2,10 +2,35 @@
 import React, { useState } from "react";
 import { Mood } from "@prisma/client";
 import { createEntry } from "@/app/actions/form-actions";
+import FoodList from "../../assets/foodList.json";
+import PainList from "../../assets/painList.json";
+import { IFoodListData, IPainListData } from "@/app/(components)/Types";
+import PainButton from "@/app/(components)/PainButton";
+import FoodButton from "@/app/(components)/FoodButton";
 
 const CreatePage = () => {
   const moods = Object.values(Mood);
-  const [foods, setFoods] = useState<string[]>(["pizza", "coke"]);
+  const smileyMood = (mood: Mood) => {
+    switch (mood) {
+      case "Sad":
+        return " 😞";
+      case "Angry":
+        return " 😠";
+      case "Excited":
+        return " 😃";
+      case "Joyful":
+        return " 😄";
+      default:
+        break;
+    }
+  };
+
+  const [foods, setFoods] = useState<IFoodListData[]>(FoodList);
+  const [selectedFoods, setSelectedFoods] = useState<IFoodListData | null>(
+    null
+  );
+  const [pain, setPain] = useState<IPainListData[]>(PainList);
+  const [selectedPain, setSelectedPain] = useState<IPainListData | null>(null);
   //   const renderItem = {(item, index) => (
   //     <List.Item key={item} onClick={() => this.selectFood(index)}>
   //       <List.Item.Meta
@@ -18,12 +43,41 @@ const CreatePage = () => {
   // )}
 
   const selectFood = (index: number) => {
-    // const selectedItem = this.state.data[index];
-    console.log(index);
+    setFoods((prevFoods) => {
+      const stateUpdate = foods.map((obj) => {
+        // 👇️ if id equals 2, update country property
+        if (obj.id === index) {
+          return { ...obj, isSelected: !obj.isSelected };
+        }
+        // 👇️ otherwise return the object as is
+        return obj;
+      });
+      // Update selected foods to be the modified single object
+      const selectedFood = stateUpdate.find((x) => x.id === index);
+      setSelectedFoods(selectedFood || null); // Use null if no item is found
+      return stateUpdate;
+    });
+  };
+
+  const selectPain = (index: number) => {
+    setPain((prevPain) => {
+      const stateUpdate = pain.map((obj) => {
+        // 👇️ if id equals 2, update country property
+        if (obj.pain === index) {
+          return { ...obj, isSelected: !obj.isSelected };
+        }
+        // 👇️ otherwise return the object as is
+        return obj;
+      });
+      // Update selected foods to be the modified single object
+      const selectedPain = stateUpdate.find((x) => x.pain === index);
+      setSelectedPain(selectedPain || null); // Use null if no item is found
+      return stateUpdate;
+    });
   };
 
   return (
-    <div className="w-full max-w-xs m-auto p-2">
+    <div className="w-full max-w-sm m-auto p-2">
       <form
         action={createEntry}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -51,16 +105,63 @@ const CreatePage = () => {
           >
             Foods
           </label>
-          <div className="flex flex-row gap-1">
-            {foods.map((x, y) => (
+          <div className="flex flex-row gap-1 flex-wrap justify-evenly">
+            <input
+              className="hidden"
+              name="foods"
+              id="foods"
+              type="text"
+              value={selectedFoods?.id}
+            />
+            {/* {foods.slice(0, 4)?.map((x, y) => (
               <button
-                className="block text-gray-700 text-sm font-normal mb-2 border rounded-xl w-fit p-2"
+                className={`block text-gray-700 text-sm font-normal mb-2 border rounded-xl w-fit p-2 ${
+                  x.isSelected ? "border-black border-2" : ""
+                }`}
                 key={y}
                 type="button"
-                onClick={() => selectFood(y)}
+                onClick={() => selectFood(x.id)}
               >
-                {x}
+                {x.name}
               </button>
+            ))} */}
+
+            {foods?.slice(0, 8).map((x, y) => (
+              <FoodButton
+                // {...x}
+                key={y}
+                food={x}
+                index={y}
+                isSelected={x.isSelected}
+                // entry={entry!}
+                onClick={() => selectFood(x.id)}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="pain"
+          >
+            Pain
+          </label>
+          <div className="flex flex-row gap-1 flex-wrap justify-evenly">
+            <input
+              className="hidden"
+              name="pain"
+              id="pain"
+              type="text"
+              value={selectedPain?.pain}
+            />
+            {pain?.slice(0, 9).map((x, y) => (
+              <PainButton
+                key={y}
+                pain={x}
+                index={y}
+                isSelected={x.isSelected}
+                onClick={() => selectPain(x.pain)}
+              />
             ))}
           </div>
         </div>
@@ -74,6 +175,7 @@ const CreatePage = () => {
           <textarea
             required
             className="shadow appearance-none border resize-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            rows={4}
             name="content"
             id="content"
             placeholder="Your entry text here"
@@ -94,9 +196,9 @@ const CreatePage = () => {
             defaultValue=""
           >
             <option value="" disabled></option>
-            {moods.map((mood, idx) => (
+            {moods?.map((mood, idx) => (
               <option key={idx} value={mood}>
-                {mood}
+                {mood + smileyMood(mood)}
               </option>
             ))}
           </select>

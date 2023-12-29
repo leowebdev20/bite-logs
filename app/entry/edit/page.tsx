@@ -1,33 +1,137 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Mood } from "@prisma/client";
 import { redirect } from "next/navigation";
+import FoodList from "../../assets/foodList.json";
+import PainList from "../../assets/painList.json";
+import { IEntry, IFoodListData, IPainListData } from "@/app/(components)/types";
+import { editEntry, getEntry } from "@/app/actions/form-actions";
+import FoodButton from "@/app/(components)/FoodButton";
+import PainButton from "@/app/(components)/PainButton";
 
-const EditPage = async ({
+const EditPage = ({
   searchParams: { id },
 }: {
   searchParams: { id: string };
 }) => {
   const moods = Object.values(Mood);
-  const entry = await prisma.entry.findUnique({ where: { id } });
+  const smileyMood = (mood: Mood) => {
+    switch (mood) {
+      case "Sad":
+        return " 😞";
+      case "Angry":
+        return " 😠";
+      case "Excited":
+        return " 😃";
+      case "Joyful":
+        return " 😄";
+      default:
+        break;
+    }
+  };
 
-  const editEntry = async (data: FormData) => {
-    "use server";
-    const formData = {
-      title: data.get("title")!.toString(),
-      content: data.get("content")!.toString(),
-      mood: data.get("mood")! as Mood,
+  const [foods, setFoods] = useState<IFoodListData[]>(FoodList);
+  const [selectedFoods, setSelectedFoods] = useState<IFoodListData | null>(
+    null
+  );
+  const [pain, setPain] = useState<IPainListData[]>(PainList);
+  const [selectedPain, setSelectedPain] = useState<IPainListData | null>(null);
+  const [entry, setEntry] = useState<IEntry | null>(null);
+  // const entry = await prisma.entry.findUnique({ where: { id } });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getEntry(id);
+      // set state with the result
+      setEntry(data);
     };
-    await prisma.entry.update({ data: formData, where: { id } });
-    redirect("/");
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+  }, [id]);
+
+  useEffect(() => {
+    setSelectedFoods(
+      foods.find((x) => x.id.toString() === entry?.foods[0]) || null
+    );
+
+    setSelectedPain(
+      pain.find((x) => x.pain.toString() === entry?.pain.toString()) || null
+    );
+  }, [entry]);
+
+  const selectFood = (index: number | string) => {
+    setFoods((prevFoods) => {
+      const stateUpdate = prevFoods.map((obj) => {
+        if (obj.id === index) {
+          if (obj.isSelected) {
+            return { ...obj, isSelected: false };
+          } else if (
+            entry?.foods[0] == obj.id.toString() &&
+            obj.isSelected === undefined
+          ) {
+            return { ...obj, isSelected: false };
+          } else if (
+            entry?.foods[0] == obj.id.toString() &&
+            obj.isSelected !== undefined
+          ) {
+            return { ...obj, isSelected: !obj.isSelected };
+          } else {
+            return { ...obj, isSelected: true };
+          }
+        }
+        return obj;
+      });
+      // Update selected foods to be the modified single object
+      const selectedFood = stateUpdate.find((x) => x.id === index);
+      setSelectedFoods(selectedFood || null); // Use null if no item is found
+      return stateUpdate;
+    });
+  };
+
+  const selectPain = (index: number | string) => {
+    setPain((prevPain) => {
+      const stateUpdate = prevPain.map((obj) => {
+        if (obj.pain === index) {
+          if (obj.isSelected) {
+            return { ...obj, isSelected: false };
+          } else if (
+            entry?.pain.toString() == obj.pain.toString() &&
+            obj.isSelected === undefined
+          ) {
+            return { ...obj, isSelected: false };
+          } else if (
+            entry?.pain.toString() == obj.pain.toString() &&
+            obj.isSelected !== undefined
+          ) {
+            return { ...obj, isSelected: !obj.isSelected };
+          } else {
+            return { ...obj, isSelected: true };
+          }
+        }
+        return obj;
+      });
+      const selectedPain = stateUpdate.find((x) => x.pain === index);
+      setSelectedPain(selectedPain || null);
+      return stateUpdate;
+    });
   };
 
   return (
-    <div className="w-full max-w-xs m-auto p-2">
+    <div className="w-full max-w-sm m-auto p-2">
       <form
         action={editEntry}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
         <div className="mb-4">
+          <input
+            className="hidden"
+            name="id"
+            id="id"
+            type="text"
+            defaultValue={id}
+          />
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="title"
@@ -35,6 +139,7 @@ const EditPage = async ({
             Title
           </label>
           <input
+            required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             name="title"
             id="title"
@@ -46,12 +151,69 @@ const EditPage = async ({
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="food"
+          >
+            Foods
+          </label>
+          <div className="flex flex-row gap-1 flex-wrap justify-evenly">
+            <input
+              className="hidden"
+              name="foods"
+              id="foods"
+              type="text"
+              value={selectedFoods?.id}
+            />
+            {foods?.slice(0, 8).map((x, y) => (
+              <FoodButton
+                // {...x}
+                key={y}
+                food={x}
+                index={y}
+                entry={entry!}
+                isSelected={x.isSelected}
+                onClick={() => selectFood(x.id)}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="pain"
+          >
+            Pain
+          </label>
+          <div className="flex flex-row gap-1 flex-wrap justify-evenly">
+            <input
+              className="hidden"
+              name="pain"
+              id="pain"
+              type="text"
+              value={selectedPain?.pain}
+            />
+            {pain?.slice(0, 9).map((x, y) => (
+              <PainButton
+                key={y}
+                pain={x}
+                index={y}
+                entry={entry!}
+                isSelected={x.isSelected}
+                onClick={() => selectPain(x.pain)}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="content"
           >
             Content
           </label>
           <textarea
+            required
             className="shadow appearance-none border resize-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            rows={4}
             name="content"
             id="content"
             placeholder="Your entry text here"
@@ -66,27 +228,32 @@ const EditPage = async ({
           Mood
         </label>
         <div className="inline-block relative w-full mb-3">
-          <select
-            className="text-gray-700 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-            name="mood"
-            defaultValue={entry?.mood}
-          >
-            <option value="" disabled selected></option>
-            {moods.map((mood, idx) => (
-              <option key={idx} value={mood}>
-                {mood}
-              </option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg
-              className="fill-current h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-            </svg>
-          </div>
+          {entry?.mood && (
+            <>
+              <select
+                required
+                className="text-gray-700 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                name="mood"
+                defaultValue={entry?.mood}
+              >
+                <option value="" disabled></option>
+                {moods?.map((mood, idx) => (
+                  <option key={idx} value={mood}>
+                    {mood + smileyMood(mood)}
+                  </option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </>
+          )}
         </div>
         <div className="flex items-center justify-between">
           <button

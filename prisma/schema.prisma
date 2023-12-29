@@ -1,19 +1,21 @@
 generator client {
   provider = "prisma-client-js"
 }
- 
+
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
- 
+
 model Entry {
-  id String @id @default(uuid())
-  title String
-  content String
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  foods     String[]
+  pain      Decimal  @default(2)
   createdAt DateTime @default(now())
-  mood Mood
+  mood      Mood
 }
 
 enum Mood {

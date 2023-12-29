@@ -6,7 +6,7 @@ const Nav = () => {
     <nav className="text-white flex flex-row items-center justify-between p-2">
       <ul>
         <li>
-          <Link href="/" className="pl-2">
+          <Link href="/" className="pl-2 text-lg">
             <strong>Bite Logs</strong>
           </Link>
         </li>

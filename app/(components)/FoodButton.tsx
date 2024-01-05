@@ -2,7 +2,7 @@
 import { Mood } from "@prisma/client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { IEntry, IFoodListData } from "./types";
+import { IEntry, IFoodListData } from "../(models)/types";
 import FoodList from "../assets/foodList.json";
 
 export interface IPainProps {
@@ -25,7 +25,7 @@ const FoodButton = ({
       className={`block text-gray-700 text-sm font-normal mb-2 border rounded-xl w-fit p-2 ${
         (isSelected || index.toString() === entry?.foods[0]) &&
         isSelected !== false
-          ? "border-black border-2"
+          ? "border-gray-700 border-2"
           : ""
       }`}
       // key={index}

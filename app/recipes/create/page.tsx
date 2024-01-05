@@ -31,16 +31,6 @@ const CreatePage = () => {
   );
   const [pain, setPain] = useState<IPainListData[]>(PainList);
   const [selectedPain, setSelectedPain] = useState<IPainListData | null>(null);
-  //   const renderItem = {(item, index) => (
-  //     <List.Item key={item} onClick={() => this.selectFood(index)}>
-  //       <List.Item.Meta
-  //         avatar={
-  //           <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-  //         }
-  //         title={<a href="#">{item}</a>}
-  //       />
-  //     </List.Item>
-  // )}
 
   const selectFood = (index: number) => {
     setFoods((prevFoods) => {
@@ -87,7 +77,7 @@ const CreatePage = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="title"
           >
-            Entry title
+            Recipe title
           </label>
           <input
             required
@@ -103,7 +93,7 @@ const CreatePage = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="food"
           >
-            Foods
+            Ingredients
           </label>
           <div className="flex flex-row gap-1 flex-wrap justify-evenly">
             <input
@@ -113,18 +103,6 @@ const CreatePage = () => {
               type="text"
               value={selectedFoods?.id}
             />
-            {/* {foods.slice(0, 4)?.map((x, y) => (
-              <button
-                className={`block text-gray-700 text-sm font-normal mb-2 border rounded-xl w-fit p-2 ${
-                  x.isSelected ? "border-gray-700 border-2" : ""
-                }`}
-                key={y}
-                type="button"
-                onClick={() => selectFood(x.id)}
-              >
-                {x.name}
-              </button>
-            ))} */}
 
             {foods?.slice(0, 8).map((x, y) => (
               <FoodButton
@@ -170,7 +148,7 @@ const CreatePage = () => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="content"
           >
-            Content
+            Steps
           </label>
           <textarea
             required
@@ -178,15 +156,14 @@ const CreatePage = () => {
             rows={4}
             name="content"
             id="content"
-            placeholder="Your entry text here"
+            placeholder="Your recipe steps here"
           />
         </div>
-        {/* <div className="mb-4"> */}
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
           htmlFor="title"
         >
-          Mood
+          Mood for this recipe
         </label>
         <div className="inline-block relative w-full mb-3">
           <select
@@ -219,12 +196,6 @@ const CreatePage = () => {
           >
             Create
           </button>
-          {/* <a
-          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-          href="#"
-        >
-          Forgot Password?
-        </a>*/}
         </div>
       </form>
     </div>

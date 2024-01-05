@@ -2,7 +2,7 @@
 import { Mood } from "@prisma/client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { IEntry, IFoodListData } from "./types";
+import { IEntry, IFoodListData } from "../(models)/types";
 import FoodList from "../assets/foodList.json";
 
 // type Props = {
@@ -20,13 +20,22 @@ const deleteEntry = async (id: string) => {
   window.location.reload();
 };
 
-const EntryCard = ({ id, title, content, foods, pain, mood }: IEntry) => {
+const EntryCard = ({
+  id,
+  title,
+  content,
+  foods,
+  pain,
+  mood,
+  createdAt,
+}: IEntry) => {
   const [allFoods, setAllFoods] = useState<IFoodListData[]>(FoodList);
 
   return (
-    <article className="mb-4 bg-slate-800 p-6 rounded-md">
+    <article className="mb-4 bg-slate-800 p-6 rounded-md flex flex-col justify-between">
       <div>
         <header>
+          <p className="text-xs text-gray-300">{createdAt.toDateString()}</p>
           <h3>{title}</h3>
         </header>
         <p>{content}</p>

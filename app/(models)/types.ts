@@ -8,6 +8,7 @@ export interface IEntry {
     foods: string[];
     pain: Decimal;
     mood: Mood;
+    createdAt: Date;
 }
 
 export interface IFoodListData {
@@ -32,4 +33,14 @@ export interface IPainListData {
     pain: number;
     description: string;
     isSelected?: boolean | null;
+}
+
+export interface IRecipe {
+    id: string;
+    title: string;
+    content: string;
+    foods: string[];
+    pain: Decimal;
+    mood: Mood;
+    createdAt: Date;
 }

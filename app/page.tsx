@@ -11,15 +11,18 @@ export default async function Home() {
       createdAt: "desc",
     },
   });
+
   return (
     <main className="text-white flex flex-col items-center justify-between">
       <div className="z-10 w-full items-center justify-between p-8 pb-2">
         <h1 className="text-3xl font-bold tracking-tight leading-none md:text-5xl lg:text-6xl pb-4">
           All Entries
         </h1>
-        {journalEntries?.map((entry) => (
-          <EntryCard key={entry.id} {...entry} />
-        ))}
+        <div className="sm:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {journalEntries?.map((entry) => (
+            <EntryCard key={entry.id} {...entry} />
+          ))}
+        </div>
       </div>
       <div className="text-3xl">&#x2022; &#x2022; &#x2022;</div>
       <div className="z-10 w-full items-center justify-between p-8 pt-4">
@@ -40,12 +43,12 @@ export default async function Home() {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
+              <a href="/about" className="hover:underline me-4 md:me-6">
                 About
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline">
+              <a href="/contact" className="hover:underline">
                 Contact
               </a>
             </li>

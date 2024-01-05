@@ -2,25 +2,21 @@
 import { Mood } from "@prisma/client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { IEntry, IFoodListData } from "./types";
+import { IEntry, IFoodListData } from "../(models)/types";
 import FoodList from "../assets/foodList.json";
+import Modal from "./NewFoodModal";
 
-const deleteEntry = async (id: string) => {
-  await fetch(`/api/entry/delete?id=${id}`, {
-    method: "DELETE",
-  });
-  window.location.reload();
-};
 const MealPlan = ({ id, title, content, foods, pain, mood }: any) => {
   const [allFoods, setAllFoods] = useState<IFoodListData[]>(FoodList);
 
   return (
-    <article className="mb-4 bg-slate-800 p-6 rounded-md">
-      <div>
+    <article className="mb-4 bg-slate-800 rounded-md">
+      {/* <div>
         <header>
-          <h4>🍖 Maybe next you can try...</h4>
-        </header>
-      </div>
+          <h4></h4>
+        </header> */}
+      <Modal text="🍖 Maybe next you can try..." />
+      {/* </div> */}
     </article>
   );
 };

@@ -24,3 +24,13 @@ enum Mood {
   Sad
   Angry
 }
+
+model Recipe {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  foods     String[]
+  pain      Decimal  @default(2)
+  createdAt DateTime @default(now())
+  mood      Mood
+}

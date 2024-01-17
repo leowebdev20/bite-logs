@@ -1,12 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { Mood } from "@prisma/client";
-import { createEntry } from "@/app/actions/form-actions";
+import { createEntry } from "@/app/actions/entry-actions";
 import FoodList from "../../assets/foodList.json";
 import PainList from "../../assets/painList.json";
 import { IFoodListData, IPainListData } from "@/app/(models)/types";
 import PainButton from "@/app/(components)/PainButton";
 import FoodButton from "@/app/(components)/FoodButton";
+import BackButton from "@/app/(components)/BackButton";
+import Footer from "@/app/(components)/Footer";
 
 const CreatePage = () => {
   const moods = Object.values(Mood);
@@ -50,7 +52,7 @@ const CreatePage = () => {
           return { ...obj, isSelected: !obj.isSelected };
         }
         // 👇️ otherwise return the object as is
-        return obj;
+        return { ...obj, isSelected: false };
       });
       // Update selected foods to be the modified single object
       const selectedFood = stateUpdate.find((x) => x.id === index);
@@ -67,7 +69,7 @@ const CreatePage = () => {
           return { ...obj, isSelected: !obj.isSelected };
         }
         // 👇️ otherwise return the object as is
-        return obj;
+        return { ...obj, isSelected: false };
       });
       // Update selected foods to be the modified single object
       const selectedPain = stateUpdate.find((x) => x.pain === index);
@@ -212,12 +214,12 @@ const CreatePage = () => {
             </svg>
           </div>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-green-t hover:contrast-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Create
+            Add Entry
           </button>
           {/* <a
           className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
@@ -227,6 +229,10 @@ const CreatePage = () => {
         </a>*/}
         </div>
       </form>
+
+      <BackButton />
+
+      <Footer />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Archivo&family=Inter&family=Open+Sans:wght@300;400;500&family=Roboto&display=swap");
 
 $base-color: #323049;
 $background-color: rgba($base-color, 0.88);
@@ -47,10 +48,12 @@ $text-color: rgba($base-color, 0.18);
 
 @layer components {
   .btn {
-    @apply hover:no-underline bg-blue-400 hover:bg-btn-blue tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block;
+    // @apply hover:no-underline bg-blue-400 hover:bg-btn-blue tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block;
+    @apply hover:no-underline bg-green-t hover:contrast-125 tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block text-gray-100;
   }
   .btn-2 {
-    @apply hover:no-underline bg-btn-passive hover:bg-blue-900 tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block border border-white;
+    // @apply hover:no-underline bg-btn-passive hover:bg-blue-900 tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block border border-white;
+    @apply hover:no-underline bg-gray-t hover:contrast-125 tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block border border-white text-medium-t;
   }
 }
 
@@ -68,4 +71,105 @@ body {
   main {
     margin: auto;
   }
+  @apply bg-medium-t;
+}
+
+// Custom styling for the Calendar
+body > div > div > div > div > div.react-calendar {
+  border: none;
+  font-family: "Inter", sans-serif;
+}
+
+body
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div.react-calendar__navigation
+  > button.react-calendar__navigation__label
+  > span {
+  color: rgb(30 41 59);
+  font-weight: 600;
+}
+
+body
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > div
+  > div.react-calendar__month-view__weekdays
+  > div
+  > abbr {
+  color: rgb(30 41 59);
+  text-decoration: none;
+}
+
+body
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > div
+  > div.react-calendar__month-view__days
+  > button.react-calendar__tile.react-calendar__tile--now.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend {
+  background-color: #517cc5;
+  border-radius: 6px;
+}
+
+body
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > div
+  > div.react-calendar__month-view__days
+  > button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend {
+  background-color: #6fafef;
+  border-radius: 6px;
+}
+
+body
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > div
+  > div.react-calendar__month-view__days
+  > button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day {
+  background-color: #6fafef;
+  border-radius: 6px;
+}
+
+body
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > div
+  > div.react-calendar__month-view__days
+  > button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend {
+  background-color: #86aee96b;
+  border-radius: 6px;
 }

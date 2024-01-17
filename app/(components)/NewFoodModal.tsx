@@ -48,7 +48,7 @@ const NewFoodModal = ({ text, content }: any) => {
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 roundedb gap-2">
                   <button
                     // className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    className="btn shadow hover:shadow-lg w-auto bg-white border border-blue-400 text-blue-400 hover:bg-white"
+                    className="btn shadow hover:shadow-lg w-auto bg-white border border-light-t text-light-t hover:bg-white"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
@@ -57,7 +57,7 @@ const NewFoodModal = ({ text, content }: any) => {
                   <Link href="/entry/create">
                     <button
                       // className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      className="btn shadow hover:shadow-lg w-auto"
+                      className="btn shadow hover:shadow-lg w-auto bg-green-t"
                       type="button"
                       onClick={() => setShowModal(false)}
                     >

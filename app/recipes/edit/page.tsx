@@ -4,13 +4,18 @@ import { Mood } from "@prisma/client";
 import { redirect } from "next/navigation";
 import FoodList from "../../assets/foodList.json";
 import PainList from "../../assets/painList.json";
-import { IEntry, IFoodListData, IPainListData } from "@/app/(models)/types";
-import { editEntry, getEntry } from "@/app/actions/entry-actions";
+import { IRecipe, IFoodListData, IPainListData } from "@/app/(models)/types";
+import { editRecipe, getRecipe } from "@/app/actions/recipe-actions";
 import FoodButton from "@/app/(components)/FoodButton";
 import PainButton from "@/app/(components)/PainButton";
 import SkeletonLoader from "@/app/(components)/SkeletonLoader";
-import BackButton from "@/app/(components)/BackButton";
-import Footer from "@/app/(components)/Footer";
+
+const deleteRecipe = async (id: string) => {
+  await fetch(`/api/recipe/delete?id=${id}`, {
+    method: "DELETE",
+  });
+  redirect("/");
+};
 
 const EditPage = ({
   searchParams: { id },
@@ -39,14 +44,14 @@ const EditPage = ({
   );
   const [pain, setPain] = useState<IPainListData[]>(PainList);
   const [selectedPain, setSelectedPain] = useState<IPainListData | null>(null);
-  const [entry, setEntry] = useState<IEntry | null>(null);
-  // const entry = await prisma.entry.findUnique({ where: { id } });
+  const [recipe, setRecipe] = useState<IRecipe | null>(null);
+  // const recipe = await prisma.recipe.findUnique({ where: { id } });
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getEntry(id);
+      const data = await getRecipe(id);
       // set state with the result
-      setEntry(data);
+      setRecipe(data);
     };
     // call the function
     fetchData()
@@ -56,13 +61,13 @@ const EditPage = ({
 
   useEffect(() => {
     setSelectedFoods(
-      foods.find((x) => x.id.toString() === entry?.foods[0]) || null
+      foods.find((x) => x.id.toString() === recipe?.foods[0]) || null
     );
 
     setSelectedPain(
-      pain.find((x) => x.pain.toString() === entry?.pain.toString()) || null
+      pain.find((x) => x.pain.toString() === recipe?.pain.toString()) || null
     );
-  }, [entry]);
+  }, [recipe]);
 
   const selectFood = (index: number | string) => {
     setFoods((prevFoods) => {
@@ -71,12 +76,12 @@ const EditPage = ({
           if (obj.isSelected) {
             return { ...obj, isSelected: false };
           } else if (
-            entry?.foods[0] == obj.id.toString() &&
+            recipe?.foods[0] == obj.id.toString() &&
             obj.isSelected === undefined
           ) {
             return { ...obj, isSelected: false };
           } else if (
-            entry?.foods[0] == obj.id.toString() &&
+            recipe?.foods[0] == obj.id.toString() &&
             obj.isSelected !== undefined
           ) {
             return { ...obj, isSelected: !obj.isSelected };
@@ -103,12 +108,12 @@ const EditPage = ({
           if (obj.isSelected) {
             return { ...obj, isSelected: false };
           } else if (
-            entry?.pain.toString() == obj.pain.toString() &&
+            recipe?.pain.toString() == obj.pain.toString() &&
             obj.isSelected === undefined
           ) {
             return { ...obj, isSelected: false };
           } else if (
-            entry?.pain.toString() == obj.pain.toString() &&
+            recipe?.pain.toString() == obj.pain.toString() &&
             obj.isSelected !== undefined
           ) {
             return { ...obj, isSelected: !obj.isSelected };
@@ -127,7 +132,7 @@ const EditPage = ({
 
   return (
     <div className="w-full max-w-sm m-auto p-2">
-      {!entry ? (
+      {!recipe ? (
         // <SkeletonLoader className="flex gap-2 my-2 w-80">
         <SkeletonLoader className="bg-white p-4 py-8 rounded-md">
           <div className="bg-gray-400 shadow-md rounded px-8 pt-6 pb-8 mb-4"></div>
@@ -138,7 +143,7 @@ const EditPage = ({
         </SkeletonLoader>
       ) : (
         <form
-          action={editEntry}
+          action={editRecipe}
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         >
           <div className="mb-4">
@@ -153,7 +158,7 @@ const EditPage = ({
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="title"
             >
-              Entry title
+              Recipe title
             </label>
             <input
               required
@@ -162,7 +167,7 @@ const EditPage = ({
               id="title"
               type="text"
               placeholder="Title"
-              defaultValue={entry?.title}
+              defaultValue={recipe?.title}
             />
           </div>
           <div className="mb-4">
@@ -186,7 +191,7 @@ const EditPage = ({
                   key={y}
                   food={x}
                   index={y}
-                  entry={entry!}
+                  entry={recipe!}
                   isSelected={x.isSelected}
                   onClick={() => selectFood(x.id)}
                 />
@@ -213,7 +218,7 @@ const EditPage = ({
                   key={y}
                   pain={x}
                   index={y}
-                  entry={entry!}
+                  entry={recipe!}
                   isSelected={x.isSelected}
                   onClick={() => selectPain(x.pain)}
                 />
@@ -233,8 +238,8 @@ const EditPage = ({
               rows={4}
               name="content"
               id="content"
-              placeholder="Your entry text here"
-              defaultValue={entry?.content}
+              placeholder="Your recipe text here"
+              defaultValue={recipe?.content}
             />
           </div>
           {/* <div className="mb-4"> */}
@@ -245,13 +250,13 @@ const EditPage = ({
             Mood
           </label>
           <div className="inline-block relative w-full mb-3">
-            {entry?.mood && (
+            {recipe?.mood && (
               <>
                 <select
                   required
                   className="text-gray-700 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                   name="mood"
-                  defaultValue={entry?.mood}
+                  defaultValue={recipe?.mood}
                 >
                   <option value="" disabled></option>
                   {moods?.map((mood, idx) => (
@@ -272,12 +277,33 @@ const EditPage = ({
               </>
             )}
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-between">
             <button
               className="bg-green-t hover:contrast-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              Save Entry
+              Save Recipe
+            </button>
+            <button
+              onClick={() => deleteRecipe(id)}
+              // className="block bg-blue-400 text-white p-2 rounded-md m-2"
+              className="btn-2 my-2 bg-gray-t text-slate-800"
+              style={{ width: "auto" }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                />
+              </svg>
             </button>
             {/* <a
           className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
@@ -288,10 +314,6 @@ const EditPage = ({
           </div>
         </form>
       )}
-
-      <BackButton />
-
-      <Footer />
     </div>
   );
 };

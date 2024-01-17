@@ -1,7 +1,9 @@
 export const revalidate = 10;
 import prisma from "@/lib/prisma";
+import Link from "next/link";
 import CalendarCard from "./(components)/CalendarCard";
 import EntryCard from "./(components)/EntryCard";
+import Footer from "./(components)/Footer";
 import MealPlan from "./(components)/MealPlan";
 import RecipeCard from "./(components)/RecipeCard";
 
@@ -15,9 +17,18 @@ export default async function Home() {
   return (
     <main className="text-white flex flex-col items-center justify-between">
       <div className="z-10 w-full items-center justify-between p-8 pb-2">
-        <h1 className="text-3xl font-bold tracking-tight leading-none md:text-5xl lg:text-6xl pb-4">
-          All Entries
-        </h1>
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-3xl font-bold tracking-tight leading-none md:text-5xl lg:text-6xl pb-4">
+            All Entries
+          </h1>
+          <Link
+            className="btn h-full px-6 py-2 w-auto bg-green-t mb-2"
+            href="/entry/create"
+            role={"button"}
+          >
+            New Entry
+          </Link>
+        </div>
         <div className="sm:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {journalEntries?.map((entry) => (
             <EntryCard key={entry.id} {...entry} />
@@ -31,30 +42,7 @@ export default async function Home() {
         <RecipeCard />
       </div>
 
-      <footer className="bg-white rounded-lg shadow m-4 dark:bg-slate-800">
-        <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-          <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-            <li>
-              <a
-                href="https://github.com/leowebdev20/"
-                className="hover:underline me-4 md:me-6"
-              >
-                © LeoWebDev 2023
-              </a>
-            </li>
-            <li>
-              <a href="/about" className="hover:underline me-4 md:me-6">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="/contact" className="hover:underline">
-                Contact
-              </a>
-            </li>
-          </ul>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

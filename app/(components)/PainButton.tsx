@@ -1,7 +1,12 @@
 import { Mood } from "@prisma/client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { IEntry, IFoodListData, IPainListData } from "../(models)/types";
+import {
+  IEntry,
+  IFoodListData,
+  IPainListData,
+  IRecipe,
+} from "../(models)/types";
 import PainList from "../assets/painList.json";
 
 export interface IPainProps {
@@ -22,7 +27,7 @@ const PainButton = ({
   return (
     <>
       <button
-        // className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        // className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:contrast-125 dark:focus:ring-blue-800"
         className={`tooltip block text-gray-700 text-sm font-normal mb-2 border rounded-xl w-fit p-2 ${
           (isSelected || (index + 1).toString() === entry?.pain.toString()) &&
           isSelected !== false

@@ -7,7 +7,7 @@ import NextTopLoader from "nextjs-toploader";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bite Logs",
+  title: "BiteLogs",
   description: "Log your foods and mood!",
 };
 

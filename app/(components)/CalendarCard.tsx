@@ -15,7 +15,7 @@ const deleteEntry = async (id: string) => {
 const CalendarCard = ({ id, title, content, foods, pain, mood }: any) => {
   return (
     <Link href={`/calendar`} role="button">
-      <article className="mb-4 bg-slate-800 p-6 rounded-md">
+      <article className="mb-4 bg-dark-t p-6 rounded-md">
         <div>
           <header>
             <h4>🔎 Review your responses day by day</h4>

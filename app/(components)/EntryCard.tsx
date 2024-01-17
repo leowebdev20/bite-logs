@@ -32,7 +32,7 @@ const EntryCard = ({
   const [allFoods, setAllFoods] = useState<IFoodListData[]>(FoodList);
 
   return (
-    <article className="mb-4 bg-slate-800 p-6 rounded-md flex flex-col justify-between">
+    <article className="mb-4 bg-dark-t p-6 rounded-md flex flex-col justify-between">
       <div>
         <header>
           <p className="text-xs text-gray-300">{createdAt.toDateString()}</p>
@@ -67,7 +67,7 @@ const EntryCard = ({
         <Link
           href={`/entry/edit?id=${id}`}
           // className="block bg-blue-400 text-white p-2 rounded-md text-center m-2"
-          className="btn my-2"
+          className="btn my-2 bg-green-t"
           style={{ width: "100%" }}
           role="button"
         >
@@ -76,10 +76,10 @@ const EntryCard = ({
         <button
           onClick={() => deleteEntry(id)}
           // className="block bg-blue-400 text-white p-2 rounded-md m-2"
-          className="btn-2 my-2"
-          style={{ width: "100%" }}
+          className="btn-2 my-2 bg-gray-t"
+          // style={{ width: "100%" }}
         >
-          <p>Delete</p>
+          <p className=" text-medium-t">Delete</p>
         </button>
       </div>
     </article>

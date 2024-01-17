@@ -12,6 +12,8 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'hero-pattern': "url('/ffflux.svg')",
+        'footer-pattern': "url('/wwwatercolor.jpg')",
       },
       colors: {
         nav: "green",
@@ -20,7 +22,12 @@ const config: Config = {
         "default-text": "white",
         "default-background": "gray",
         "btn-blue": "rgb(29 78 216 / 1)",
-        "btn-passive": "#1f304d"
+        "btn-passive": "#1f304d",
+        "dark-t": "#652791",
+        "medium-t": "#812791",
+        "light-t": "#b347ad",
+        "green-t": "#65b391",
+        "gray-t": "#F1EFF6"
       }
     },
   },

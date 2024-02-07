@@ -22,10 +22,10 @@ const FoodButton = ({
 }: IPainProps) => {
   return (
     <button
-      className={`block text-gray-700 text-sm font-normal mb-2 border rounded-xl w-fit p-2 ${
+      className={`mb-2 block w-fit rounded-xl border p-2 text-sm font-normal text-gray-700 ${
         (isSelected || index.toString() === entry?.foods[0]) &&
         isSelected !== false
-          ? "border-gray-700 border-2"
+          ? "border-2 border-gray-700"
           : ""
       }`}
       // key={index}

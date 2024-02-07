@@ -10,7 +10,8 @@ const MealPlan = ({ id, title, content, foods, pain, mood }: any) => {
   const [allFoods, setAllFoods] = useState<IFoodListData[]>(FoodList);
 
   return (
-    <article className="mb-4 bg-dark-t rounded-md">
+    // <article className="mb-4 bg-dark-t rounded-md">
+    <article className="mb-4 rounded-md bg-dark-t hover:bg-light-t">
       {/* <div>
         <header>
           <h4></h4>

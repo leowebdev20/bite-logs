@@ -9,7 +9,7 @@ const BackButton = () => {
     <div className="flex items-center justify-center">
       <button
         type="button"
-        className="btn-2 my-2 bg-gray-t w-auto"
+        className="btn-2 my-2 w-auto bg-gray-t"
         onClick={() => router.back()}
       >
         Back

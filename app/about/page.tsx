@@ -3,15 +3,15 @@ import BackButton from "../(components)/BackButton";
 
 const about = () => {
   return (
-    <div className="w-full max-w-sm m-auto p-2">
-      <div className="mb-4 bg-dark-t p-6 rounded-md flex flex-col justify-between">
-        <div className="text-white text-sm">
+    <div className="m-auto w-full max-w-sm p-2">
+      <div className="mb-4 flex flex-col justify-between rounded-md bg-dark-t p-6">
+        <div className="text-sm text-white">
           I am Leonardo Seren, a Front End Developer from Italy!
           <div>
             You can follow me at
             <a
               href="https://github.com/leowebdev20/"
-              className="italic hover:underline me-4 md:me-6 ml-1"
+              className="me-4 ml-1 italic hover:underline md:me-6"
             >
               LeoWebDev.
             </a>

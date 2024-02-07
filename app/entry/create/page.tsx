@@ -29,7 +29,7 @@ const CreatePage = () => {
 
   const [foods, setFoods] = useState<IFoodListData[]>(FoodList);
   const [selectedFoods, setSelectedFoods] = useState<IFoodListData | null>(
-    null
+    null,
   );
   const [pain, setPain] = useState<IPainListData[]>(PainList);
   const [selectedPain, setSelectedPain] = useState<IPainListData | null>(null);
@@ -79,21 +79,21 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="w-full max-w-sm m-auto p-2">
+    <div className="m-auto w-full max-w-sm p-2">
       <form
         action={createEntry}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md"
       >
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="mb-2 block text-sm font-bold text-gray-700"
             htmlFor="title"
           >
             Entry title
           </label>
           <input
             required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             name="title"
             id="title"
             type="text"
@@ -102,12 +102,12 @@ const CreatePage = () => {
         </div>
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="mb-2 block text-sm font-bold text-gray-700"
             htmlFor="food"
           >
             Foods
           </label>
-          <div className="flex flex-row gap-1 flex-wrap justify-evenly">
+          <div className="flex flex-row flex-wrap justify-evenly gap-1">
             <input
               className="hidden"
               name="foods"
@@ -143,12 +143,12 @@ const CreatePage = () => {
         </div>
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="mb-2 block text-sm font-bold text-gray-700"
             htmlFor="pain"
           >
             Pain
           </label>
-          <div className="flex flex-row gap-1 flex-wrap justify-evenly">
+          <div className="flex flex-row flex-wrap justify-evenly gap-1">
             <input
               className="hidden"
               name="pain"
@@ -156,27 +156,29 @@ const CreatePage = () => {
               type="text"
               value={selectedPain?.pain}
             />
-            {pain?.slice(0, 9).map((x, y) => (
-              <PainButton
-                key={y}
-                pain={x}
-                index={y}
-                isSelected={x.isSelected}
-                onClick={() => selectPain(x.pain)}
-              />
-            ))}
+            {pain
+              ?.slice(0, 9)
+              .map((x, y) => (
+                <PainButton
+                  key={y}
+                  pain={x}
+                  index={y}
+                  isSelected={x.isSelected}
+                  onClick={() => selectPain(x.pain)}
+                />
+              ))}
           </div>
         </div>
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="mb-2 block text-sm font-bold text-gray-700"
             htmlFor="content"
           >
             Content
           </label>
           <textarea
             required
-            className="shadow appearance-none border resize-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline mb-3 w-full resize-none appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             rows={4}
             name="content"
             id="content"
@@ -185,15 +187,15 @@ const CreatePage = () => {
         </div>
         {/* <div className="mb-4"> */}
         <label
-          className="block text-gray-700 text-sm font-bold mb-2"
+          className="mb-2 block text-sm font-bold text-gray-700"
           htmlFor="title"
         >
           Mood
         </label>
-        <div className="inline-block relative w-full mb-3">
+        <div className="relative mb-3 inline-block w-full">
           <select
             required
-            className="text-gray-700 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-2 pr-8 leading-tight text-gray-700 shadow hover:border-gray-500 focus:outline-none"
             name="mood"
             defaultValue=""
           >
@@ -206,7 +208,7 @@ const CreatePage = () => {
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg
-              className="fill-current h-4 w-4"
+              className="h-4 w-4 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >
@@ -216,7 +218,7 @@ const CreatePage = () => {
         </div>
         <div className="flex items-center justify-center">
           <button
-            className="bg-green-t hover:contrast-125 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline rounded bg-green-t px-4 py-2 font-bold text-white hover:contrast-125 focus:outline-none"
             type="submit"
           >
             Add Entry

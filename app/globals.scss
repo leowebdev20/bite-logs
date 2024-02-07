@@ -80,6 +80,11 @@ body > div > div > div > div > div.react-calendar {
   font-family: "Inter", sans-serif;
 }
 
+body > div > div > div > div > div > div.react-calendar {
+  border-radius: 6px;
+  border: 1px solid #6fafef;
+}
+
 body
   > div
   > div
@@ -114,6 +119,23 @@ body
   > div
   > div
   > div
+  > div.w-full.max-w-sm.m-auto.p-2
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > div
+  > div.react-calendar__month-view__weekdays
+  > div
+  > abbr {
+  text-decoration: none;
+}
+
+body
+  > div
+  > div
+  > div
   > div
   > div
   > div.react-calendar__viewContainer
@@ -122,7 +144,7 @@ body
   > div
   > div.react-calendar__month-view__days
   > button.react-calendar__tile.react-calendar__tile--now.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend {
-  background-color: #517cc5;
+  background-color: #517cc5 !important;
   border-radius: 6px;
 }
 
@@ -138,7 +160,7 @@ body
   > div
   > div.react-calendar__month-view__days
   > button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend {
-  background-color: #6fafef;
+  background-color: #6fafef !important;
   border-radius: 6px;
 }
 
@@ -154,7 +176,7 @@ body
   > div
   > div.react-calendar__month-view__days
   > button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day {
-  background-color: #6fafef;
+  background-color: #6fafef !important;
   border-radius: 6px;
 }
 
@@ -170,6 +192,91 @@ body
   > div
   > div.react-calendar__month-view__days
   > button.react-calendar__tile.react-calendar__tile--now.react-calendar__month-view__days__day.react-calendar__month-view__days__day--weekend {
-  background-color: #86aee96b;
+  background-color: #86aee96b !important;
+  border-radius: 6px;
+}
+
+body
+  > div
+  > div
+  > div
+  > div.w-full.max-w-sm.m-auto.p-2
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > div
+  > div.react-calendar__month-view__days
+  > button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--range.react-calendar__tile--rangeStart.react-calendar__tile--rangeEnd.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day {
+  border-radius: 6px;
+}
+
+body
+  > div
+  > div
+  > div
+  > div.w-full.max-w-sm.m-auto.p-2
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > div
+  > div.react-calendar__month-view__days
+  > button {
+  border-radius: 6px;
+}
+
+body
+  > div
+  > div
+  > div
+  > div.w-full.max-w-sm.m-auto.p-2
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > button {
+  border-radius: 6px;
+}
+
+body
+  > div
+  > div
+  > div
+  > div.w-full.max-w-sm.m-auto.p-2
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > button.react-calendar__tile.react-calendar__tile--now.react-calendar__tile--hasActive.react-calendar__century-view__decades__decade {
+  border-radius: 6px;
+}
+
+body
+  > div
+  > div
+  > div
+  > div.w-full.max-w-sm.m-auto.p-2
+  > div
+  > div
+  > div.react-calendar__viewContainer
+  > div
+  > div
+  > button.react-calendar__tile.react-calendar__tile--now.react-calendar__tile--hasActive.react-calendar__decade-view__years__year {
+  border-radius: 6px;
+}
+
+.react-calendar__decade-view__years,
+.react-calendar__century-view__decades,
+.react-calendar__year-view__months {
+  padding: 5px;
+}
+
+.react-calendar__navigation__label,
+.react-calendar__navigation__arrow {
   border-radius: 6px;
 }

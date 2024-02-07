@@ -17,7 +17,7 @@ const RecipeCard = ({ id, title, content, foods, pain, mood }: any) => {
 
   return (
     <Link href={`/recipes/create`} role="button">
-      <article className="mb-4 bg-dark-t p-6 rounded-md">
+      <article className="mb-4 rounded-md bg-dark-t p-6 hover:bg-light-t">
         <div>
           <header>
             <h4>👩‍🍳 Log a recipe or choose a new one!</h4>

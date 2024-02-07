@@ -32,9 +32,9 @@ const RecipesList = ({ id, title, content, foods, pain, mood }: any) => {
   }, [id]);
 
   return (
-    <article className="mb-4 bg-dark-t p-6 rounded-md">
+    <article className="mb-4 rounded-md bg-dark-t p-6">
       <div>
-        <header className="text-md text-white flex flex-row justify-between items-center">
+        <header className="text-md flex flex-row items-center justify-between text-white">
           <h4>All recipes</h4>
           {/* <Link
             className="btn h-full px-6 py-2 w-auto"
@@ -44,10 +44,8 @@ const RecipesList = ({ id, title, content, foods, pain, mood }: any) => {
             New Recipe
           </Link> */}
         </header>
-        <div className="sm:grid md:grid-cols-2 lg:grid-cols-3 gap-4 pt-3">
-          {recipes?.map((recipe) => (
-            <RecipeBox key={recipe.id} {...recipe} />
-          ))}
+        <div className="gap-4 pt-3 sm:grid md:grid-cols-2 lg:grid-cols-3">
+          {recipes?.map((recipe) => <RecipeBox key={recipe.id} {...recipe} />)}
         </div>
       </div>
     </article>

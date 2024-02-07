@@ -15,21 +15,21 @@ export default async function Home() {
   });
 
   return (
-    <main className="text-white flex flex-col items-center justify-between">
+    <main className="flex flex-col items-center justify-between text-white">
       <div className="z-10 w-full items-center justify-between p-8 pb-2">
-        <div className="flex flex-row justify-between items-center">
-          <h1 className="text-3xl font-bold tracking-tight leading-none md:text-5xl lg:text-6xl pb-4">
+        <div className="flex flex-row items-center justify-between">
+          <h1 className="pb-4 text-3xl font-bold leading-none tracking-tight md:text-5xl lg:text-6xl">
             All Entries
           </h1>
           <Link
-            className="btn h-full px-6 py-2 w-auto bg-green-t mb-2"
+            className="btn mb-2 h-full w-auto bg-green-t px-6 py-2"
             href="/entry/create"
             role={"button"}
           >
             New Entry
           </Link>
         </div>
-        <div className="sm:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="gap-4 sm:grid md:grid-cols-2 lg:grid-cols-3">
           {journalEntries?.map((entry) => (
             <EntryCard key={entry.id} {...entry} />
           ))}

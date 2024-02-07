@@ -15,8 +15,8 @@ const LogCalendar = () => {
 
   return (
     <div>
-      <div className="w-full max-w-sm m-auto p-2">
-        <div className="text-slate-800 p-4 m-2 bg-white rounded-md">
+      <div className="m-auto w-full max-w-sm p-2">
+        <div className="m-2 rounded-md bg-white p-4 text-slate-800">
           <Calendar onChange={onChange} value={value} />
           <p className="text-black">{value?.toString()}</p>
         </div>

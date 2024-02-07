@@ -32,7 +32,7 @@ const EntryCard = ({
   const [allFoods, setAllFoods] = useState<IFoodListData[]>(FoodList);
 
   return (
-    <article className="mb-4 bg-dark-t p-6 rounded-md flex flex-col justify-between">
+    <article className="mb-4 flex flex-col justify-between rounded-md bg-dark-t p-6">
       <div>
         <header>
           <p className="text-xs text-gray-300">{createdAt.toDateString()}</p>
@@ -47,7 +47,7 @@ const EntryCard = ({
           {foods.length ? (
             allFoods?.map(
               (food, idx) =>
-                food.id.toString() == foods[0] && <p key={idx}>{food.name}</p>
+                food.id.toString() == foods[0] && <p key={idx}>{food.name}</p>,
             )
           ) : (
             <p>No food logged</p>
@@ -63,7 +63,7 @@ const EntryCard = ({
           </span>
         </p>
       </div>
-      <div className="flex justify-center items-center gap-1">
+      <div className="flex items-center justify-center gap-1">
         <Link
           href={`/entry/edit?id=${id}`}
           // className="block bg-blue-400 text-white p-2 rounded-md text-center m-2"

@@ -3,7 +3,6 @@ import { Mood } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/router";
 
-
 export const getAllRecipes = async () => {
   return await prisma.recipe.findMany({
     orderBy: {

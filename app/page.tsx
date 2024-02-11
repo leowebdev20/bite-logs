@@ -1,18 +1,30 @@
+"use client";
 export const revalidate = 10;
-import prisma from "@/lib/prisma";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import CalendarCard from "./(components)/CalendarCard";
 import EntryCard from "./(components)/EntryCard";
 import Footer from "./(components)/Footer";
 import MealPlan from "./(components)/MealPlan";
 import RecipeCard from "./(components)/RecipeCard";
+import { IEntry } from "./(models)/types";
+import { getAllEntries } from "./actions/entry-actions";
 
-export default async function Home() {
-  const journalEntries = await prisma.entry.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+// export default async function Home() {
+export default function Home() {
+  const [entries, setEntries] = useState<IEntry[] | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAllEntries();
+      // set state with the result
+      setEntries(data);
+    };
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+  }, []);
 
   return (
     <main className="flex flex-col items-center justify-between text-white">
@@ -29,11 +41,15 @@ export default async function Home() {
             New Entry
           </Link>
         </div>
-        <div className="gap-4 sm:grid md:grid-cols-2 lg:grid-cols-3">
-          {journalEntries?.map((entry) => (
-            <EntryCard key={entry.id} {...entry} />
-          ))}
-        </div>
+        {entries?.length ? (
+          <div className="gap-4 sm:grid md:grid-cols-2 lg:grid-cols-3">
+            {entries?.map((entry) => <EntryCard key={entry.id} {...entry} />)}
+          </div>
+        ) : (
+          <div className="gap-4 text-center sm:grid md:grid-cols-2 lg:grid-cols-3">
+            <h4>Add an entry...</h4>
+          </div>
+        )}
       </div>
       <div className="text-3xl">&#x2022; &#x2022; &#x2022;</div>
       <div className="z-10 w-full items-center justify-between p-8 pt-4">

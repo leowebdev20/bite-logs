@@ -17,7 +17,11 @@ const LogCalendar = () => {
     <div>
       <div className="m-auto w-full max-w-sm p-2">
         <div className="m-2 rounded-md bg-white p-4 text-slate-800">
-          <Calendar onChange={onChange} value={value} />
+          <Calendar
+            onChange={onChange}
+            value={value}
+            calendarType={"iso8601"}
+          />
           <p className="text-black">{value?.toString()}</p>
         </div>
       </div>

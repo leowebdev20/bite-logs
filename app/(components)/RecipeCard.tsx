@@ -20,7 +20,7 @@ const RecipeCard = ({ id, title, content, foods, pain, mood }: any) => {
       <article className="mb-4 rounded-md bg-dark-t p-6 hover:bg-light-t">
         <div>
           <header>
-            <h4>👩‍🍳 Log a recipe or choose a new one!</h4>
+            <h4>👩‍🍳 Log a new recipe or try another!</h4>
           </header>
         </div>
       </article>

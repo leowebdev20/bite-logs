@@ -279,7 +279,7 @@ const EditPage = ({
               className="focus:shadow-outline rounded bg-green-t px-4 py-2 font-bold text-white hover:contrast-125 focus:outline-none"
               type="submit"
             >
-              Save Entry
+              Update Entry
             </button>
             {/* <a
           className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"

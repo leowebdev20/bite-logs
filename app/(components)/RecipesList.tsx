@@ -16,7 +16,6 @@ const deleteEntry = async (id: string) => {
 
 const RecipesList = ({ id, title, content, foods, pain, mood }: any) => {
   const [allFoods, setAllFoods] = useState<IFoodListData[]>(FoodList);
-
   const [recipes, setRecipes] = useState<IRecipe[] | null>(null);
 
   useEffect(() => {
@@ -32,23 +31,29 @@ const RecipesList = ({ id, title, content, foods, pain, mood }: any) => {
   }, [id]);
 
   return (
-    <article className="mb-4 rounded-md bg-dark-t p-6">
-      <div>
-        <header className="text-md flex flex-row items-center justify-between text-white">
-          <h4>All recipes</h4>
-          {/* <Link
+    <>
+      {recipes?.length && (
+        <article className="mb-4 rounded-md bg-dark-t p-6">
+          <div>
+            <header className="text-md flex flex-row items-center justify-between text-white">
+              <h4>All recipes</h4>
+              {/* <Link
             className="btn h-full px-6 py-2 w-auto"
             href="/recipes/create"
             role={"button"}
           >
             New Recipe
           </Link> */}
-        </header>
-        <div className="gap-4 pt-3 sm:grid md:grid-cols-2 lg:grid-cols-3">
-          {recipes?.map((recipe) => <RecipeBox key={recipe.id} {...recipe} />)}
-        </div>
-      </div>
-    </article>
+            </header>
+            <div className="gap-4 pt-3 sm:grid md:grid-cols-2 lg:grid-cols-3">
+              {recipes?.map((recipe) => (
+                <RecipeBox key={recipe.id} {...recipe} />
+              ))}
+            </div>
+          </div>
+        </article>
+      )}
+    </>
   );
 };
 

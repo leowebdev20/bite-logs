@@ -9,6 +9,8 @@ import { editRecipe, getRecipe } from "@/app/actions/recipe-actions";
 import FoodButton from "@/app/(components)/FoodButton";
 import PainButton from "@/app/(components)/PainButton";
 import SkeletonLoader from "@/app/(components)/SkeletonLoader";
+import BackButton from "@/app/(components)/BackButton";
+import Footer from "@/app/(components)/Footer";
 
 const deleteRecipe = async (id: string) => {
   await fetch(`/api/recipe/delete?id=${id}`, {
@@ -284,7 +286,7 @@ const EditPage = ({
               className="focus:shadow-outline rounded bg-green-t px-4 py-2 font-bold text-white hover:contrast-125 focus:outline-none"
               type="submit"
             >
-              Save Recipe
+              Update Recipe
             </button>
             <button
               onClick={() => deleteRecipe(id)}
@@ -316,6 +318,8 @@ const EditPage = ({
           </div>
         </form>
       )}
+
+      <BackButton />
     </div>
   );
 };

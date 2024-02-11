@@ -2,6 +2,14 @@
 import { Mood } from "@prisma/client";
 import { redirect } from "next/navigation";
 
+export const getAllEntries = async () => {
+  return await prisma.entry.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
 export const createEntry = async (data: FormData) => {
   "use server";
   const formData = {

@@ -9,8 +9,15 @@ import PainButton from "@/app/(components)/PainButton";
 import FoodButton from "@/app/(components)/FoodButton";
 import BackButton from "@/app/(components)/BackButton";
 import Footer from "@/app/(components)/Footer";
+import { useSearchParams } from "next/navigation";
 
 const CreatePage = () => {
+  // Check if there is a food in the params
+  const searchParams = useSearchParams();
+  const [foodToTry, setFoodToTry] = useState<string | null>(
+    searchParams.get("newFood"),
+  );
+
   const moods = Object.values(Mood);
   const smileyMood = (mood: Mood) => {
     switch (mood) {
@@ -98,6 +105,7 @@ const CreatePage = () => {
             id="title"
             type="text"
             placeholder="Title"
+            defaultValue={foodToTry ? `${foodToTry} with...` : ""}
           />
         </div>
         <div className="mb-4">

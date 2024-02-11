@@ -46,7 +46,7 @@ export default function Home() {
             {entries?.map((entry) => <EntryCard key={entry.id} {...entry} />)}
           </div>
         ) : (
-          <div className="gap-4 text-center sm:grid md:grid-cols-2 lg:grid-cols-3">
+          <div className="gap-4 text-center ">
             <h4>Add an entry...</h4>
           </div>
         )}

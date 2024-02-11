@@ -63,11 +63,11 @@ const EntryCard = ({
           </span>
         </p>
       </div>
-      <div className="flex items-center justify-center gap-1">
+      <div className="flex items-center justify-center gap-4">
         <Link
           href={`/entry/edit?id=${id}`}
           // className="block bg-blue-400 text-white p-2 rounded-md text-center m-2"
-          className="btn my-2 bg-green-t"
+          className="btn flex-2 my-2 bg-green-t"
           style={{ width: "100%" }}
           role="button"
         >
@@ -76,7 +76,7 @@ const EntryCard = ({
         <button
           onClick={() => deleteEntry(id)}
           // className="block bg-blue-400 text-white p-2 rounded-md m-2"
-          className="btn-2 my-2 bg-gray-t"
+          className="btn-2 flex-1 my-2 bg-gray-t"
           // style={{ width: "100%" }}
         >
           <p className=" text-medium-t">Delete</p>

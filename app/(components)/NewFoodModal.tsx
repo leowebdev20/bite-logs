@@ -1,9 +1,17 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import RandomFoods from "../assets/randomFoods.json";
 
 const NewFoodModal = ({ text, content }: any) => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [newFood, setNewFood] = useState<string>("Chicken Breast");
+  const [newFood, setNewFood] = useState<string>("");
+  const [randomFoods, setRandomFoods] = useState<string[]>(RandomFoods);
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * randomFoods.length);
+    setNewFood(randomFoods[randomIndex]);
+  }, [showModal]);
+
   return (
     <>
       <button

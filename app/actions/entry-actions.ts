@@ -1,6 +1,7 @@
 'use server'
 import { Mood } from "@prisma/client";
 import { redirect } from "next/navigation";
+import prisma from '@/lib/prisma';
 
 export const getAllEntries = async () => {
   return await prisma.entry.findMany({

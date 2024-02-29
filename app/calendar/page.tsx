@@ -1,38 +1,73 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import BackButton from "../(components)/BackButton";
+import EntryCard from "../(components)/EntryCard";
+import { IEntry } from "../(models)/types";
+import { getAllEntries, getEntryByDate } from "../actions/entry-actions";
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 // CardModal component
-const CardModal = ({ onClose, date }: any) => {
-  return (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={onClose}>
-          &times;
-        </span>
-        <h2>{date.toDateString()}</h2>
-        <p>Card content for {date.toDateString()}</p>
-      </div>
-    </div>
-  );
-};
 
 const LogCalendar = () => {
   const router = useRouter();
   const [value, onChange] = useState<Value>(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
-
   // State to manage highlighted dates
-  const [highlightedDates, setHighlightedDates] = useState([
-    new Date(2024, 1, 10), // Example date 1
-    new Date(2024, 1, 15), // Example date 2
-  ]);
+  // const [highlightedDates, setHighlightedDates] = useState([
+  //   new Date(2024, 1, 10), // Example date 1
+  //   new Date(2024, 1, 15), // Example date 2
+  // ]);
+
+  const [entries, setEntries] = useState<IEntry[] | null>(null);
+  const [entryDates, setEntryDates] = useState<Date[] | null>(null);
+  const [singleEntry, setSingleEntry] = useState<IEntry | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAllEntries();
+      // set state with the result
+      setEntries(data);
+
+      // Extract dates from entries
+      extractDates(data);
+    };
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (selectedDate) {
+      const fetchData = async () => {
+        try {
+          const data = await getEntryByDate(selectedDate);
+          setSingleEntry(data);
+          console.log(data, "!!!!!!!!");
+        } catch (error) {
+          console.error("Error fetching entry:", error);
+        }
+      };
+
+      if (isModalOpen) {
+        fetchData();
+      }
+    }
+  }, [isModalOpen]);
+
+  const extractDates = (data: IEntry[]) => {
+    const datesArray = data.map((entry) => entry.createdAt);
+    console.log("Extracted dates:", datesArray);
+    // set state with the dates array
+    setEntryDates(datesArray);
+  };
 
   // Function to handle date selection
   const handleDateClick = (date: any) => {
@@ -41,9 +76,15 @@ const LogCalendar = () => {
     //   ? highlightedDates.filter((d) => !isSameDay(d, date))
     //   : [...highlightedDates, date];
     // setHighlightedDates(updatedHighlightedDates);
+    console.log(date);
+    console.log(entryDates![0]);
 
     // Open modal only if date is highlighted
-    if (highlightedDates.some((d) => d.getTime() === date.getTime())) {
+    if (
+      entryDates &&
+      entryDates.some((d) => new Date(d).getDay() === date.getDay())
+    ) {
+      setIsModalOpen(!isModalOpen);
       setSelectedDate(date);
     }
   };
@@ -59,7 +100,7 @@ const LogCalendar = () => {
 
   // Function to determine custom classes for highlighted dates
   const tileClassName = ({ date, view }: any) => {
-    if (highlightedDates.find((d) => isSameDay(d, date))) {
+    if (entryDates && entryDates.find((d) => isSameDay(d, date))) {
       return "highlighted-date"; // Apply this class to highlighted dates
     }
     return null;
@@ -67,7 +108,27 @@ const LogCalendar = () => {
 
   // Function to close the modal
   const closeModal = () => {
+    setIsModalOpen(!isModalOpen);
     setSelectedDate(null);
+  };
+
+  const CardModal = ({ onClose, date }: any) => {
+    return (
+      <div className="modal">
+        <div className="modal-content">
+          <span className="close" onClick={onClose}>
+            &times;
+          </span>
+          <div className="p-4">
+            <h2>{date.toDateString()}</h2>
+            <p className="text-black">Recipe and mood on this day:</p>
+          </div>
+          <div className="gap-4 p-4 text-white">
+            {singleEntry && <EntryCard key={singleEntry.id} {...singleEntry} />}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -75,7 +136,7 @@ const LogCalendar = () => {
       <style>
         {`
       .highlighted-date {
-        background-color: #ffcc00; /* Yellow background color */
+        background-color: #ca00ff; /* Yellow background color */
         color: #fff; /* White text color */
         border-radius: 50%; /* Rounded border */
       }
@@ -118,7 +179,13 @@ const LogCalendar = () => {
     `}
       </style>
       <div className="m-auto w-full max-w-sm p-2">
+        <h3 className="text-center text-white">
+          Review your moods and reactions by date
+        </h3>
         <div className="m-2 rounded-md bg-white p-4 text-slate-800">
+          <p className="pb-2 text-black">
+            Days with entry logs are highlighted
+          </p>
           <Calendar
             onChange={onChange}
             value={value}
@@ -126,8 +193,11 @@ const LogCalendar = () => {
             onClickDay={handleDateClick} // Handle date clicks
             tileClassName={tileClassName} // Apply custom classes to dates
           />
-          <p className="text-black">{value?.toString()}</p>
-
+          <div>
+            <p className="pt-2 text-black">
+              Today is {(value as Date).toDateString()}
+            </p>
+          </div>
           {/* Render CardModal if a date is selected */}
           {selectedDate && (
             <CardModal onClose={closeModal} date={selectedDate} />

@@ -21,6 +21,7 @@ model Entry {
 enum Mood {
   Joyful
   Excited
+  Neutral
   Sad
   Angry
 }

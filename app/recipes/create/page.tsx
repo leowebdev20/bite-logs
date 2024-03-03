@@ -21,6 +21,8 @@ const CreatePage = () => {
         return " 😞";
       case "Angry":
         return " 😠";
+      case "Neutral":
+        return " 😐";
       case "Excited":
         return " 😃";
       case "Joyful":

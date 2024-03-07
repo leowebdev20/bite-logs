@@ -43,17 +43,16 @@ export const getEntry = async (id: string) => {
   "use server";
   return await prisma.entry.findUnique({ where: { id } });
 };
+
 export const getEntryByDate = async (date: Date) => {
-  // Extract year, month, and day from the provided date
-   // Calculate the start and end of the given date
-   const startDate = new Date(date);
-   startDate.setHours(0, 0, 0, 0); // Set to beginning of the day
-   const endDate = new Date(date);
-   endDate.setHours(23, 59, 59, 999); // Set to end of the day
- 
-  console.log(date);
+  const startDate = new Date(date);
+  startDate.setHours(0, 0, 0, 0); // Set to beginning of the day
+  const endDate = new Date(date);
+  endDate.setHours(23, 59, 59, 999); // Set to end of the day
+
+  console.log(startDate, endDate);
   "use server";
-  return await prisma.entry.findFirst({
+  const result = await prisma.entry.findFirst({
     where: {
       createdAt: {
         gte: startDate, // Greater than or equal to the start of the day
@@ -61,4 +60,5 @@ export const getEntryByDate = async (date: Date) => {
       },
     },
   });
+  return result
 };

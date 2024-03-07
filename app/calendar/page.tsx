@@ -11,7 +11,7 @@ import { getAllEntries, getEntryByDate } from "../actions/entry-actions";
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
-// CardModal component
+// CalModal component
 
 const LogCalendar = () => {
   const router = useRouter();
@@ -49,8 +49,10 @@ const LogCalendar = () => {
       const fetchData = async () => {
         try {
           const data = await getEntryByDate(selectedDate);
-          setSingleEntry(data);
-          console.log(data, "!!!!!!!!");
+          if (data) {
+            console.log(data, "Entry by Date");
+            setSingleEntry(data);
+          }
         } catch (error) {
           console.error("Error fetching entry:", error);
         }
@@ -76,13 +78,15 @@ const LogCalendar = () => {
     //   ? highlightedDates.filter((d) => !isSameDay(d, date))
     //   : [...highlightedDates, date];
     // setHighlightedDates(updatedHighlightedDates);
-    console.log(date);
-    console.log(entryDates![0]);
+    console.log(date, "date");
+    console.log(entryDates![0], "first entry date");
 
     // Open modal only if date is highlighted
     if (
       entryDates &&
-      entryDates.some((d) => new Date(d).getDay() === date.getDay())
+      entryDates.some(
+        (d) => new Date(d).setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0),
+      )
     ) {
       setIsModalOpen(!isModalOpen);
       setSelectedDate(date);
@@ -102,6 +106,8 @@ const LogCalendar = () => {
   const tileClassName = ({ date, view }: any) => {
     if (entryDates && entryDates.find((d) => isSameDay(d, date))) {
       return "highlighted-date"; // Apply this class to highlighted dates
+    } else if (date.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0)) {
+      return "today-date"; // Apply this class to highlighted dates
     }
     return null;
   };
@@ -112,22 +118,50 @@ const LogCalendar = () => {
     setSelectedDate(null);
   };
 
-  const CardModal = ({ onClose, date }: any) => {
+  const CalModal = ({ onClose, date }: any) => {
     return (
-      <div className="modal">
-        <div className="modal-content">
-          <span className="close" onClick={onClose}>
-            &times;
-          </span>
-          <div className="p-4">
-            <h2>{date.toDateString()}</h2>
-            <p className="text-black">Recipe and mood on this day:</p>
-          </div>
-          <div className="gap-4 p-4 text-white">
-            {singleEntry && <EntryCard key={singleEntry.id} {...singleEntry} />}
+      <>
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden p-6 outline-none focus:outline-none">
+          <div className="relative mx-auto my-6 w-auto max-w-3xl">
+            <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
+              <div className="border-blueGray-200 flex items-start justify-between rounded-t border-b border-solid p-5">
+                <h3 className="text-xl text-slate-800">
+                  {date.toDateString()}
+                </h3>
+                <button
+                  className="float-right ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none text-gray-700 outline-none focus:outline-none"
+                  onClick={onClose}
+                >
+                  <span className="block h-6 w-6 bg-transparent text-2xl text-gray-700 outline-none focus:outline-none">
+                    ⨯
+                  </span>
+                </button>
+              </div>
+              <div className="relative flex-auto p-6">
+                <p className="my-4 text-lg leading-relaxed text-slate-800">
+                  🕒 Recipe and mood on this day:
+                </p>
+                <div className="text-white">
+                  {singleEntry && (
+                    <EntryCard key={singleEntry.id} {...singleEntry} />
+                  )}
+                </div>
+              </div>
+              <div className="border-blueGray-200 roundedb flex items-center justify-end gap-2 border-t border-solid p-6">
+                <button
+                  // className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="btn w-auto border border-light-t bg-white text-light-t shadow hover:bg-white hover:shadow-lg"
+                  type="button"
+                  onClick={onClose}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+        <div className="fixed inset-0 z-40 bg-gray-700 opacity-25"></div>
+      </>
     );
   };
 
@@ -135,10 +169,15 @@ const LogCalendar = () => {
     <div>
       <style>
         {`
+      .today-date {
+        background-color: #7cc59c; 
+        color: #fff; 
+        border-radius: 50%; 
+      }
       .highlighted-date {
-        background-color: #ca00ff; /* Yellow background color */
-        color: #fff; /* White text color */
-        border-radius: 50%; /* Rounded border */
+        background-color: #ca00ff; 
+        color: #fff; 
+        border-radius: 50%; 
       }
 
       /* Modal styles */
@@ -195,12 +234,12 @@ const LogCalendar = () => {
           />
           <div>
             <p className="pt-2 text-black">
-              Today is {(value as Date).toDateString()}
+              You selected {(value as Date).toDateString()}
             </p>
           </div>
-          {/* Render CardModal if a date is selected */}
+          {/* Render CalModal if a date is selected */}
           {selectedDate && (
-            <CardModal onClose={closeModal} date={selectedDate} />
+            <CalModal onClose={closeModal} date={selectedDate} />
           )}
         </div>
       </div>

@@ -52,7 +52,7 @@ export default function Home() {
         )}
       </div>
       <div className="text-3xl">&#x2022; &#x2022; &#x2022;</div>
-      <div className="z-10 w-full items-center justify-between p-8 pt-4">
+      <div className="w-full items-center justify-between p-8 pt-4">
         <CalendarCard />
         <MealPlan />
         <RecipeCard />

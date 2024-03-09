@@ -11,13 +11,7 @@ import PainButton from "@/app/(components)/PainButton";
 import SkeletonLoader from "@/app/(components)/SkeletonLoader";
 import BackButton from "@/app/(components)/BackButton";
 import Footer from "@/app/(components)/Footer";
-
-const deleteRecipe = async (id: string) => {
-  await fetch(`/api/recipe/delete?id=${id}`, {
-    method: "DELETE",
-  });
-  redirect("/");
-};
+import { useRouter } from "next/navigation";
 
 const EditPage = ({
   searchParams: { id },
@@ -42,6 +36,15 @@ const EditPage = ({
     }
   };
 
+  const router = useRouter();
+  const deleteRecipe = async (id: string) => {
+    await fetch(`/api/recipe/delete?id=${id}`, {
+      method: "DELETE",
+    });
+    router.back();
+  };
+
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [foods, setFoods] = useState<IFoodListData[]>(FoodList);
   const [selectedFoods, setSelectedFoods] = useState<IFoodListData | null>(
     null,
@@ -132,6 +135,57 @@ const EditPage = ({
       setSelectedPain(selectedPain || null);
       return stateUpdate;
     });
+  };
+
+  const showDelete = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowModal(true);
+  };
+
+  const CloseModal = ({ onClose, date }: any) => {
+    return (
+      <>
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden p-6 outline-none focus:outline-none">
+          <div className="relative mx-auto my-6 w-auto max-w-3xl">
+            <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
+              <div className="border-blueGray-200 flex items-start justify-between rounded-t border-b border-solid p-5">
+                <h3 className="text-xl text-slate-800">Delete</h3>
+                <button
+                  className="float-right ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none text-gray-700 outline-none focus:outline-none"
+                  onClick={() => setShowModal(false)}
+                >
+                  <span className="block h-6 w-6 bg-transparent text-2xl text-gray-700 outline-none focus:outline-none">
+                    ⨯
+                  </span>
+                </button>
+              </div>
+              <div className="relative flex-auto p-6">
+                <p className="my-4 text-lg leading-relaxed text-slate-800">
+                  Are you sure you want to delete this item?
+                </p>
+              </div>
+              <div className="border-blueGray-200 roundedb flex items-center justify-end gap-2 border-t border-solid p-6">
+                <button
+                  className="btn w-auto border border-light-t bg-white text-light-t shadow hover:bg-white hover:shadow-lg"
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                >
+                  Close
+                </button>
+                <button
+                  className="btn w-auto bg-red-600 shadow hover:shadow-lg"
+                  type="button"
+                  onClick={() => deleteRecipe(id)}
+                >
+                  I am sure
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="fixed inset-0 z-40 bg-gray-700 opacity-25"></div>
+      </>
+    );
   };
 
   return (
@@ -284,14 +338,11 @@ const EditPage = ({
             )}
           </div>
           <div className="flex items-center justify-between">
-            <button
-              className="focus:shadow-outline rounded bg-green-t px-4 py-2 font-bold text-white hover:contrast-125 focus:outline-none"
-              type="submit"
-            >
+            <button className="focus:shadow-outline rounded bg-green-t px-4 py-2 font-bold text-white hover:contrast-125 focus:outline-none">
               Update Recipe
             </button>
             <button
-              onClick={() => deleteRecipe(id)}
+              onClick={(e) => showDelete(e)}
               // className="block bg-blue-400 text-white p-2 rounded-md m-2"
               className="btn-2 my-2 bg-gray-t text-slate-800 hover:contrast-125"
               style={{ width: "auto" }}
@@ -322,6 +373,8 @@ const EditPage = ({
       )}
 
       <BackButton />
+
+      {showModal ? <CloseModal /> : null}
     </div>
   );
 };

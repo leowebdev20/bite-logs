@@ -170,12 +170,12 @@ const LogCalendar = () => {
       <style>
         {`
       .today-date {
-        background-color: #7cc59c; 
+        background-color: #7cc59c73; 
         color: #fff; 
         border-radius: 50%; 
       }
       .highlighted-date {
-        background-color: #ca00ff; 
+        background-color: #b054ec; 
         color: #fff; 
         border-radius: 50%; 
       }

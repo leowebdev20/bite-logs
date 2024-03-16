@@ -5,6 +5,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import BackButton from "../(components)/BackButton";
 import EntryCard from "../(components)/EntryCard";
+import SkeletonLoader from "../(components)/SkeletonLoader";
 import { IEntry } from "../(models)/types";
 import { getAllEntries, getEntryByDate } from "../actions/entry-actions";
 
@@ -45,6 +46,7 @@ const LogCalendar = () => {
   }, []);
 
   useEffect(() => {
+    setSingleEntry(null);
     if (selectedDate) {
       const fetchData = async () => {
         try {
@@ -138,14 +140,22 @@ const LogCalendar = () => {
                 </button>
               </div>
               <div className="relative flex-auto p-6">
-                <p className="my-4 text-lg leading-relaxed text-slate-800">
-                  🕒 Recipe and mood on this day:
-                </p>
-                <div className="text-white">
-                  {singleEntry && (
+                {!singleEntry ? (
+                  <SkeletonLoader className="rounded-md bg-white p-4 py-8">
+                    <div className="mb-4 rounded bg-gray-400 px-8 pb-8 pt-6 shadow-md"></div>
+                    <div className="flex w-full flex-col gap-2">
+                      <div className="h-5 bg-gray-400"></div>
+                      <div className="h-5 w-1/2 bg-gray-400"></div>
+                    </div>
+                  </SkeletonLoader>
+                ) : (
+                  <div className="text-white">
+                    <p className="my-4 text-lg leading-relaxed text-slate-800">
+                      🕒 Recipe and mood on this day:
+                    </p>
                     <EntryCard key={singleEntry.id} {...singleEntry} />
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
               <div className="border-blueGray-200 roundedb flex items-center justify-end gap-2 border-t border-solid p-6">
                 <button
@@ -234,7 +244,7 @@ const LogCalendar = () => {
           />
           <div>
             <p className="pt-2 text-black">
-              You selected {(value as Date).toDateString()}
+              {/* You selected {(value as Date).toDateString()} */}
             </p>
           </div>
           {/* Render CalModal if a date is selected */}

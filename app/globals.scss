@@ -49,11 +49,11 @@ $text-color: rgba($base-color, 0.18);
 @layer components {
   .btn {
     // @apply hover:no-underline bg-blue-400 hover:bg-btn-blue tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block;
-    @apply hover:no-underline bg-green-t hover:contrast-125 tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block text-gray-100;
+    @apply block w-full cursor-pointer rounded-md bg-green-t px-4 py-2 text-center font-bold tracking-wider text-gray-100 transition-colors hover:no-underline hover:contrast-125;
   }
   .btn-2 {
     // @apply hover:no-underline bg-btn-passive hover:bg-blue-900 tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block border border-white;
-    @apply hover:no-underline bg-gray-t hover:contrast-125 tracking-wider w-full text-center font-bold cursor-pointer px-4 py-2 rounded-md transition-colors block border border-white text-medium-t;
+    @apply block w-full cursor-pointer rounded-md border border-white bg-gray-t px-4 py-2 text-center font-bold tracking-wider text-medium-t transition-colors hover:no-underline hover:contrast-125;
   }
 }
 
@@ -82,7 +82,9 @@ body > div > div > div > div > div.react-calendar {
 
 body > div > div > div > div > div > div.react-calendar {
   border-radius: 6px;
-  border: 1px solid #6fafef;
+  border: 2px solid #ffffff4d;
+  background: none;
+  padding: 4px;
 }
 
 body
@@ -279,4 +281,17 @@ body
 .react-calendar__navigation__label,
 .react-calendar__navigation__arrow {
   border-radius: 6px;
+}
+
+// Calendar background color
+
+body > div > div > div > div.m-auto.w-full.max-w-sm.p-2 > div {
+  background-image: linear-gradient(
+    to left bottom,
+    #f057b67d,
+    #dc37be91,
+    #be16cb82,
+    #da008c8a,
+    #4112eb85
+  );
 }

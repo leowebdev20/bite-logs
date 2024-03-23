@@ -85,7 +85,20 @@ const EntryCard = ({
           <p className="text-xs text-gray-300">{createdAt.toDateString()}</p>
           <h3>{title}</h3>
         </header>
-        <p>{content}</p>
+        <p className="content">
+          <style jsx>
+            {`
+              .content {
+                margin-bottom: 8px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+              }
+            `}
+          </style>
+          {content}
+        </p>
         <div className="flex flex-row gap-1">
           {/* Foods: {allFoods.map(food => food.)} */}
           <strong>

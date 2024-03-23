@@ -39,13 +39,25 @@ const RecipeBox = ({
       style={{ width: "100%" }}
       role="button"
     >
-      <article className="h-full mb-4 bg-green-t hover:contrast-125 p-6 rounded-md flex flex-col justify-between">
+      <article className="mb-4 flex h-full flex-col justify-between rounded-md bg-green-t p-6 hover:contrast-125">
         <div>
           <header>
             {/* <p className="text-xs  text-gray-300">{createdAt.toDateString()}</p> */}
             <h3 className="text-sm text-white">{title}</h3>
           </header>
-          <p>{content}</p>
+          <p className="content">
+            <style jsx>
+              {`
+                .content {
+                  overflow: hidden;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 3;
+                  -webkit-box-orient: vertical;
+                }
+              `}
+            </style>
+            {content}
+          </p>
         </div>
       </article>
     </Link>

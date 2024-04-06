@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Mood } from "@prisma/client";
-import { createEntry } from "@/app/actions/entry-actions";
 import FoodList from "../../assets/foodList.json";
 import PainList from "../../assets/painList.json";
 import { IFoodListData, IPainListData } from "@/app/(models)/types";

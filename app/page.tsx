@@ -38,7 +38,7 @@ export default function Home() {
             href="/entry/create"
             role={"button"}
           >
-            New Entry
+            Add Entry
           </Link>
         </div>
         {entries?.length ? (

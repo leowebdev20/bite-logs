@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
@@ -16,6 +17,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const LogCalendar = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
   const [value, onChange] = useState<Value>(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   // State to manage highlighted dates
@@ -48,14 +50,19 @@ const LogCalendar = () => {
   useEffect(() => {
     setSingleEntry(null);
     if (selectedDate) {
+      setLoading(true);
       const fetchData = async () => {
         try {
           const data = await getEntryByDate(selectedDate);
           if (data) {
             console.log(data, "Entry by Date");
+            setLoading(false);
             setSingleEntry(data);
+          } else {
+            setLoading(false);
           }
         } catch (error) {
+          setLoading(false);
           console.error("Error fetching entry:", error);
         }
       };
@@ -81,7 +88,7 @@ const LogCalendar = () => {
     //   : [...highlightedDates, date];
     // setHighlightedDates(updatedHighlightedDates);
     console.log(date, "date");
-    console.log(entryDates![0], "first entry date");
+    // console.log(entryDates![0], "first entry date");
 
     // Open modal only if date is highlighted
     if (
@@ -90,6 +97,9 @@ const LogCalendar = () => {
         (d) => new Date(d).setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0),
       )
     ) {
+      setIsModalOpen(!isModalOpen);
+      setSelectedDate(date);
+    } else {
       setIsModalOpen(!isModalOpen);
       setSelectedDate(date);
     }
@@ -140,7 +150,7 @@ const LogCalendar = () => {
                 </button>
               </div>
               <div className="relative flex-auto p-6">
-                {!singleEntry ? (
+                {loading ? (
                   <SkeletonLoader className="rounded-md bg-white p-4 py-8">
                     <div className="mb-4 rounded bg-gray-400 px-8 pb-8 pt-6 shadow-md"></div>
                     <div className="flex w-full flex-col gap-2">
@@ -148,12 +158,30 @@ const LogCalendar = () => {
                       <div className="h-5 w-1/2 bg-gray-400"></div>
                     </div>
                   </SkeletonLoader>
-                ) : (
+                ) : singleEntry ? (
                   <div className="text-white">
                     <p className="my-4 text-lg leading-relaxed text-slate-800">
                       🕒 Recipe and mood on this day:
                     </p>
                     <EntryCard key={singleEntry.id} {...singleEntry} />
+                  </div>
+                ) : (
+                  <div className="text-white">
+                    <p className="my-4 text-lg leading-relaxed text-slate-800">
+                      🚫 Entry not found, do you want to add one for this date?
+                    </p>
+                    <Link
+                      className="btn mb-2 h-full w-auto bg-green-t px-6 py-2"
+                      href={{
+                        pathname: "/entry/create",
+                        query: {
+                          data: date.toISOString(),
+                        },
+                      }}
+                      role={"button"}
+                    >
+                      New Entry
+                    </Link>
                   </div>
                 )}
               </div>

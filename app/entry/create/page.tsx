@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Mood } from "@prisma/client";
-import { createEntry } from "@/app/actions/entry-actions";
+import { createEntry, createWithDateEntry } from "@/app/actions/entry-actions";
 import FoodList from "../../assets/foodList.json";
 import PainList from "../../assets/painList.json";
 import { IFoodListData, IPainListData } from "@/app/(models)/types";
@@ -36,6 +36,7 @@ const CreatePage = () => {
     }
   };
 
+  const [routedDate, setRoutedDate] = useState<Date>();
   const [foods, setFoods] = useState<IFoodListData[]>(FoodList);
   const [selectedFoods, setSelectedFoods] = useState<IFoodListData | null>(
     null,
@@ -52,6 +53,10 @@ const CreatePage = () => {
   //       />
   //     </List.Item>
   // )}
+
+  useEffect(() => {
+    setRoutedDate(getQueryStringParams(window.location.search));
+  }, []);
 
   const selectFood = (index: number) => {
     setFoods((prevFoods) => {
@@ -87,10 +92,24 @@ const CreatePage = () => {
     });
   };
 
+  const getQueryStringParams = (query: any) => {
+    return query
+      ? (/^[?#]/.test(query) ? query.slice(1) : query)
+          .split("&")
+          .reduce((params: any, param: any) => {
+            let [key, value] = param.split("=");
+            params[key] = value
+              ? decodeURIComponent(value.replace(/\+/g, " "))
+              : "";
+            return params.data;
+          }, {})
+      : {};
+  };
+
   return (
     <div className="m-auto w-full max-w-sm p-2">
       <form
-        action={createEntry}
+        action={routedDate ? createWithDateEntry : createEntry}
         className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md"
       >
         <div className="mb-4">
@@ -124,6 +143,13 @@ const CreatePage = () => {
               id="foods"
               type="text"
               value={selectedFoods?.id}
+            />
+            <input
+              className="hidden"
+              name="createdAt"
+              id="createdAt"
+              type="text"
+              value={routedDate?.toString()}
             />
             {/* {foods.slice(0, 4)?.map((x, y) => (
               <button
